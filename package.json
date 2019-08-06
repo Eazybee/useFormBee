@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint '**/*js'",
     "lint:fix": "prettier-eslint '**/*js' --write",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "clean": "rm -rf build",
     "start": "npm run clean && webpack-dev-server --env.mode development --open --hot",
     "build-dev": "npm run clean && webpack --env.mode development",
@@ -33,6 +33,9 @@
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-react": "^7.0.0",
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.7",
+    "@testing-library/react-hooks": "^1.1.0",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "eslint": "^6.0.1",
@@ -41,16 +44,19 @@
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.2",
-    "husky": "^3.0.0",
+    "husky": "^3.0.2",
+    "jest": "^24.8.0",
     "lint-staged": "^9.1.0",
     "path": "^0.12.7",
     "prettier-eslint": "^9.0.0",
     "prettier-eslint-cli": "^5.0.0",
+    "react-test-renderer": "^16.8.6",
     "webpack-dev-server": "^3.7.2"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
     }
   },
   "lint-staged": {

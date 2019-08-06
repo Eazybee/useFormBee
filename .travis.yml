@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - stable
+env:
+  global:
+    - secure: SK4qTvMgqq3zLMDdETDW72J/WorKaXYSDTKmcoXC2TSo1DniORxhmISXFxHzjdwG5HFSkEpgeTYYf7shaIRyrlDtmTGGwPgm3hLsiez9RGWooBojlhu8Zkav+ASbAMBqWRs/I5JYtTEKxQ1IDO1mlaWgJ99AQVj0zGHHIUEQJSfW5b+bpZLYkY1LTpc4m43O4zXeVhFXkPIiWPHuxeqB6xOaaZGFn0zIcchRs0gKYgMYWvK84sOF7elmysmLvvw/3NuDNr8NgVEn4SW9Pekgq0iQHjxib51tpExYIw7axV8s+M64nspPufzGVgoN4iSBwBp9obqZbU507v2dWkxJLhR9D4ZHHuB8nXSVF1uuYHYy+EpgibWZ6kPW6BosrS0Bw1+H7QwMAS2IxivHeQtBMwMQBlHWNBqzGlKVomZXkNQI/pPef9MeCg2YnbLH5/B+boUBXIhFi253S8G6SQFFG2mXvw7cnR7KWWBl6X6tvR0xMDsAADfsMvS51o2kELWTxU4g6EpWctWzQkOXLcyRCN6mC8ZPfCsj0+iopqSfc4dwz3GILF/pOoycZ5lvmhm0rQnzsnnWT3qiMqVy4HwApkPgdrJ6gY0XzYLTxpXBSc1nPwOrMFTbAmAiu6ZjttEmUuzZs/mZ58VsNVp+T0jsSJ73/OkjA9Mb1SAFUCh0vLY=
+  matrix:
+    - secure: SK4qTvMgqq3zLMDdETDW72J/WorKaXYSDTKmcoXC2TSo1DniORxhmISXFxHzjdwG5HFSkEpgeTYYf7shaIRyrlDtmTGGwPgm3hLsiez9RGWooBojlhu8Zkav+ASbAMBqWRs/I5JYtTEKxQ1IDO1mlaWgJ99AQVj0zGHHIUEQJSfW5b+bpZLYkY1LTpc4m43O4zXeVhFXkPIiWPHuxeqB6xOaaZGFn0zIcchRs0gKYgMYWvK84sOF7elmysmLvvw/3NuDNr8NgVEn4SW9Pekgq0iQHjxib51tpExYIw7axV8s+M64nspPufzGVgoN4iSBwBp9obqZbU507v2dWkxJLhR9D4ZHHuB8nXSVF1uuYHYy+EpgibWZ6kPW6BosrS0Bw1+H7QwMAS2IxivHeQtBMwMQBlHWNBqzGlKVomZXkNQI/pPef9MeCg2YnbLH5/B+boUBXIhFi253S8G6SQFFG2mXvw7cnR7KWWBl6X6tvR0xMDsAADfsMvS51o2kELWTxU4g6EpWctWzQkOXLcyRCN6mC8ZPfCsj0+iopqSfc4dwz3GILF/pOoycZ5lvmhm0rQnzsnnWT3qiMqVy4HwApkPgdrJ6gY0XzYLTxpXBSc1nPwOrMFTbAmAiu6ZjttEmUuzZs/mZ58VsNVp+T0jsSJ73/OkjA9Mb1SAFUCh0vLY=
+script:
+  - npm test -- -u --coverage
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - "./cc-test-reporter before-build"
+after_script:
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
