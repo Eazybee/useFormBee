@@ -1,0 +1,13 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  background: papayawhip;
+  color: tomato;
+  height: 100vh;
+  text-align: center;
+  font-size: 4em;
+  padding: 25% 0;
+}
