@@ -14,7 +14,7 @@ const App = () => {
   };
 
   const {
-    values, handleChange, handleSubmit, errors,
+    values, handleChange, handleSubmit, errors, handleReset,
   } = useForm({ callback: login, rules });
 
   const { userName, age } = values;
@@ -46,6 +46,7 @@ const App = () => {
         {ageErr && <p data-testid='age'>{ageErr}</p>}
         <br />
         <button type='submit'>Submit</button>
+        <button type='reset' onClick={handleReset}>Reset</button>
       </form>
       {submittedValues
       && <div className='table' data-testid='table'>

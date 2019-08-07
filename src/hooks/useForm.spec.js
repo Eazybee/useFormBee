@@ -9,7 +9,7 @@ describe('userForm hook', () => {
   it(' should render', () => {
     const { result } = renderHook(() => useForm({ callback, rules }));
     const {
-      values, errors, handleChange, handleSubmit,
+      values, errors, handleChange, handleSubmit, handleReset,
     } = result.current;
 
     expect(values.age).toBe('');
@@ -18,6 +18,7 @@ describe('userForm hook', () => {
     expect(errors.ausername).toBe(undefined);
     expect(typeof handleChange).toBe('function');
     expect(typeof handleSubmit).toBe('function');
+    expect(typeof handleReset).toBe('function');
   });
 
   describe('handleChange function', () => {
@@ -100,6 +101,25 @@ describe('userForm hook', () => {
       expect(callbackResponse).toBe(false);
       expect(username).toBe('');
       expect(errors.username).toBe('The username field is required.');
+    });
+  });
+
+  describe('handleReset function', () => {
+    it('should clear all inputs field when called', () => {
+      const { result } = renderHook(() => useForm({ callback, rules }));
+
+      const { handleReset } = result.current;
+
+      act(() => {
+        handleReset();
+      });
+
+      const {
+        values: { username }, errors,
+      } = result.current;
+
+      expect(username).toBe('');
+      expect(Object.keys(errors).length).toBe(0);
     });
   });
 });

@@ -101,8 +101,13 @@ const useForm = ({ callback, rules }) => {
     return false;
   };
 
+  const handleReset = () => {
+    setValues(prepareInitialState());
+    setErrors({});
+  };
+
   return {
-    values, handleChange, handleSubmit, errors,
+    values, handleChange, handleSubmit, errors, handleReset,
   };
 };
 
