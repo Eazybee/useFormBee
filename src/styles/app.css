@@ -3,11 +3,28 @@
   padding: 0;
 }
 
+body{
+  text-align: center;
+}
+
 h1{
   background: papayawhip;
   color: tomato;
-  height: 100vh;
   text-align: center;
   font-size: 4em;
-  padding: 25% 0;
+  padding: 5% 0;
+  margin-bottom: .5em;
+}
+.table {
+  background: papayawhip;
+  margin-top: .5em;
+  display: inline-block;
+  width: 10em;
+}
+.table p{
+  display: flex;
+  justify-content: space-between;
+}
+.table p span{
+  padding: .2em;
 }
