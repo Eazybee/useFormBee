@@ -18,7 +18,7 @@ describe('App Component', () => {
     const { getByTestId, getByPlaceholderText } = render(<App/>);
     fireEvent.change(getByPlaceholderText('Username'), { target: { value: inValidInputs.username } });
 
-    expect(getByTestId('username')).toHaveTextContent('The userName field must contain only alphabetic characters.');
+    expect(getByTestId('username')).toHaveTextContent('The user name field must contain only alphabetic characters.');
     expect(getByPlaceholderText('Username')).toHaveValue(inValidInputs.username);
   });
 
@@ -26,7 +26,7 @@ describe('App Component', () => {
     const { getByTestId, getByPlaceholderText } = render(<App/>);
     fireEvent.change(getByPlaceholderText('Username'), { target: { value: ' ' } });
 
-    expect(getByTestId('username')).toHaveTextContent('The userName field cannot be empty.');
+    expect(getByTestId('username')).toHaveTextContent('The user name field cannot be empty.');
     expect(getByPlaceholderText('Username')).toHaveValue(' ');
   });
 
@@ -57,12 +57,12 @@ describe('App Component', () => {
     const { getByTestId, getByPlaceholderText } = render(<App/>);
     fireEvent.change(getByPlaceholderText('Username'), { target: { value: inValidInputs.username } });
 
-    expect(getByTestId('username')).toHaveTextContent('The userName field must contain only alphabetic characters.');
+    expect(getByTestId('username')).toHaveTextContent('The user name field must contain only alphabetic characters.');
     expect(getByPlaceholderText('Username')).toHaveValue(inValidInputs.username);
 
     fireEvent.change(getByPlaceholderText('Username'), { target: { value: ' ' } });
 
-    expect(getByTestId('username')).toHaveTextContent('The userName field cannot be empty.');
+    expect(getByTestId('username')).toHaveTextContent('The user name field cannot be empty.');
     expect(getByPlaceholderText('Username')).toHaveValue(' ');
 
     fireEvent.change(getByPlaceholderText('Username'), { target: { value: validInputs.username } });
@@ -112,7 +112,7 @@ describe('App Component', () => {
         expect(element).toBe(undefined);
         expect(error).toBeTruthy();
         expect(error.message.includes('Unable to find an element by: [data-testid="table"]')).toBeTruthy();
-        expect(getByTestId('username')).toHaveTextContent('The userName field must contain only alphabetic characters.');
+        expect(getByTestId('username')).toHaveTextContent('The user name field must contain only alphabetic characters.');
       }
     });
   });

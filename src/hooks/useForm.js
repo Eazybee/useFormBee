@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Validator from 'validatorjs';
+import formatter from '../helpers/formatter';
 
 const useForm = ({ callback, rules }) => {
   const prepareInitialState = () => {
@@ -10,6 +11,8 @@ const useForm = ({ callback, rules }) => {
 
   const [values, setValues] = useState(prepareInitialState());
   const [errors, setErrors] = useState({});
+
+  Validator.setAttributeFormatter(attribute => formatter(attribute));
 
   const validateOnSubmit = () => {
     let errorDoesNoExist = true;
@@ -56,7 +59,7 @@ const useForm = ({ callback, rules }) => {
     } = event;
 
     if (required && value.trim() === '') {
-      return errorHandler(name, value, `The ${name} field cannot be empty.`);
+      return errorHandler(name, value, `The ${formatter(name)} field cannot be empty.`);
     }
 
     const validation = new Validator(
