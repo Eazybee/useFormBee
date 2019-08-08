@@ -1,7 +1,7 @@
 {
   "name": "useFormBee",
   "version": "1.0.0",
-  "description": "useFormBee is a custom react hook that helps handle form input, validations and other simiar functionalities",
+  "description": "useFormBee is a custom react hook that helps handle form input, validations and other similar functionalities",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint '**/*js'",

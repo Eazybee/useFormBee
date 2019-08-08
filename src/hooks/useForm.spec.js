@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useForm from './useForm';
 import {
-  callback, rules, event, getEvent,
+  callback, rules, event, getEvent, checkBoxEvent, multipleSelectEvent,
 } from '../../test/fixtures/useForm';
 
 
@@ -22,18 +22,20 @@ describe('userForm hook', () => {
   });
 
   describe('handleChange function', () => {
-    it('should update username value', () => {
+    it('should update username field value', () => {
       const { result } = renderHook(() => useForm({ callback, rules }));
       const { handleChange } = result.current;
+      let valid;
 
       act(() => {
-        handleChange(event);
+        valid = handleChange(event);
       });
 
       const {
         values: { username }, errors,
       } = result.current;
 
+      expect(valid).toBe(true);
       expect(username).toBe('EazyBee');
       expect(errors.username).toBe(undefined);
     });
@@ -42,13 +44,15 @@ describe('userForm hook', () => {
       () => {
         const { result } = renderHook(() => useForm({ callback, rules }));
         const { handleChange } = result.current;
+        let valid;
 
         act(() => {
-          handleChange(getEvent({ required: true, value: ' ' }));
+          valid = handleChange(getEvent({ required: true, value: ' ' }));
         });
 
         const { values: { username }, errors } = result.current;
 
+        expect(valid).toBe(false);
         expect(username).toBe(' ');
         expect(errors.username).toBe('The username field cannot be empty.');
       });
@@ -56,16 +60,70 @@ describe('userForm hook', () => {
     it('should have error when passed data with invalid data type', () => {
       const { result } = renderHook(() => useForm({ callback, rules }));
       const { handleChange } = result.current;
+      let valid;
 
       act(() => {
-        handleChange(getEvent({ required: true, value: '1234' }));
+        valid = handleChange(getEvent({ required: true, value: '1234' }));
       });
 
       const { values: { username }, errors } = result.current;
 
+      expect(valid).toBe(false);
       expect(username).toBe('1234');
       expect(errors.username)
         .toBe('The username field must contain only alphabetic characters.');
+    });
+
+    it('should update checkbox', () => {
+      const { result } = renderHook(() => useForm({ callback, rules: { agreement: 'required|boolean' } }));
+      const { handleChange } = result.current;
+      let valid;
+
+      act(() => {
+        valid = handleChange(getEvent(checkBoxEvent));
+      });
+
+      const { values: { agreement }, errors } = result.current;
+
+      expect(valid).toBe(true);
+      expect(agreement).toBe(true);
+      expect(errors.agreement).toBe(undefined);
+    });
+
+    it('should update checkbox and display required messaged for a required field', () => {
+      const { result } = renderHook(() => useForm({ callback, rules: { agreement: 'required|boolean' } }));
+      const { handleChange } = result.current;
+      let valid;
+
+      act(() => {
+        valid = handleChange(getEvent({ ...checkBoxEvent, checked: false, required: true }));
+      });
+
+      const { values: { agreement }, errors } = result.current;
+
+      expect(valid).toBe(false);
+      expect(agreement).toBe(false);
+      expect(errors.agreement).toBe('The agreement must be accepted.');
+    });
+
+    it('should update multiple select', () => {
+      const { result } = renderHook(() => useForm({
+        callback, rules: { friends: ['alpha', { in: ['simi', 'mosimi', 'eazybee'] }] },
+      }));
+      const { handleChange } = result.current;
+      let valid;
+
+      act(() => {
+        valid = handleChange(getEvent(multipleSelectEvent));
+      });
+
+      const { values: { friends }, errors } = result.current;
+
+      expect(valid).toBe(true);
+      expect(Array.isArray(friends)).toBe(true);
+      expect(friends[0]).toBe('simi');
+      expect(friends[1]).toBe('mosimi');
+      expect(errors.friends).toBe(undefined);
     });
   });
 

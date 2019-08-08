@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import '../styles/app.css';
 import useForm from '../hooks/useForm';
+import Table from './Table';
+import SelectForm from './SelectForm';
 
 const App = () => {
-  const [submittedValues, setSubmittedValues] = useState('');
+  const [submittedValues, setSubmittedValues] = useState({});
   const login = (values) => {
     setSubmittedValues(values);
   };
@@ -11,6 +13,7 @@ const App = () => {
   const rules = {
     userName: 'alpha',
     age: 'numeric',
+    gender: 'required|boolean',
   };
 
   const {
@@ -19,8 +22,19 @@ const App = () => {
 
   const { userName, age } = values;
   const {
-    userName: usernameErr, age: ageErr,
+    userName: usernameErr, age: ageErr, gender: genderErr,
   } = errors;
+
+  const selectOptions = [
+    {
+      value: 'simi',
+      text: 'SIMI',
+    },
+    {
+      value: 'mosimi',
+      text: 'MOSIMI',
+    },
+  ];
 
   return (
     <>
@@ -45,18 +59,21 @@ const App = () => {
         />
         {ageErr && <p data-testid='age'>{ageErr}</p>}
         <br />
+        <label>
+          Gender
+          <input type='checkbox' name='gender' data-testid='confirm' required onChange={handleChange}/><br />
+        </label>
+        {genderErr && <p>{genderErr}</p>}
         <button type='submit'>Submit</button>
         <button type='reset' onClick={handleReset}>Reset</button>
       </form>
-      {submittedValues
-      && <div className='table' data-testid='table'>
-        {Object.keys(submittedValues).map((key, index) => (
-          <p key={index} data-testid={key + index}>
-            <span>{key} :</span>
-            <span>{submittedValues[key]}</span>
-          </p>
-        ))}
-      </div>}
+      {!Object.keys(errors).length
+      && Object.keys(submittedValues).length > 0
+      && <Table submittedValues={submittedValues} />}
+      <SelectForm
+        rules={{ friend: ['required', { in: ['simi', 'mosimi'] }] }}
+        options={selectOptions}
+      />
     </>
   );
 };

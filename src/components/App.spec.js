@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import {
+  render, cleanup, fireEvent,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import App from './App';
 import { validInputs, inValidInputs } from '../../test/fixtures/app';
@@ -83,12 +85,13 @@ describe('App Component', () => {
   describe('Submit Button', () => {
     it('should submit and render table on valid data input', () => {
       const {
-        getByTestId, getByPlaceholderText, getByText,
+        getByTestId, getByPlaceholderText, getAllByText,
       } = render(<App/>);
 
       fireEvent.change(getByPlaceholderText('Username'), { target: { value: validInputs.username } });
       fireEvent.change(getByPlaceholderText('Age'), { target: { value: validInputs.age } });
-      fireEvent.click(getByText('Submit'));
+      fireEvent.click(getByTestId('confirm'));
+      fireEvent.click(getAllByText('Submit')[0]);
 
       expect(getByTestId('table')).toBeTruthy();
       expect(getByTestId('table')).toContainElement(getByTestId('userName0'));
@@ -97,12 +100,12 @@ describe('App Component', () => {
 
     it('should not submit nor render table on invalid data input', () => {
       const {
-        getByTestId, getByPlaceholderText, getByText,
+        getByTestId, getByPlaceholderText, getAllByText,
       } = render(<App/>);
 
       fireEvent.change(getByPlaceholderText('Username'), { target: { value: inValidInputs.username } });
       fireEvent.change(getByPlaceholderText('Age'), { target: { value: validInputs.age } });
-      fireEvent.click(getByText('Submit'));
+      fireEvent.click(getAllByText('Submit')[0]);
 
       let element;
 
@@ -119,19 +122,19 @@ describe('App Component', () => {
 
   describe('Reset Button', () => {
     it('should clear all inputs field', () => {
-      const { getByText, getByPlaceholderText } = render(<App/>);
+      const { getAllByText, getByPlaceholderText } = render(<App/>);
       fireEvent.change(getByPlaceholderText('Username'), { target: { value: validInputs.username } });
       fireEvent.change(getByPlaceholderText('Age'), { target: { value: validInputs.age } });
-      fireEvent.click(getByText('Reset'));
+      fireEvent.click(getAllByText('Reset')[0]);
 
       expect(getByPlaceholderText('Username')).toHaveValue('');
       expect(getByPlaceholderText('Age')).toHaveValue('');
     });
 
     it('should clear all error message', () => {
-      const { getByText, getByTestId, getByPlaceholderText } = render(<App/>);
+      const { getAllByText, getByTestId, getByPlaceholderText } = render(<App/>);
       fireEvent.change(getByPlaceholderText('Username'), { target: { value: inValidInputs.username } });
-      fireEvent.click(getByText('Reset'));
+      fireEvent.click(getAllByText('Reset')[0]);
 
       let element;
 

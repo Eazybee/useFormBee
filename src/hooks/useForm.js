@@ -19,18 +19,26 @@ const useForm = ({ callback, rules }) => {
     const newErrors = { ...errors };
 
     Object.keys(rules).forEach((key) => {
-      const validation = new Validator(
-        { [key]: values[key] },
-        { [key]: rules[key] },
-      );
+      const validate = (name, value) => {
+        const validation = new Validator(
+          { [name]: value },
+          { [name]: rules[name] },
+        );
 
-      const errorMessage = validation.fails() && validation.errors.first(key);
+        const errorMessage = validation.fails() && validation.errors.first(name);
 
-      if (errorMessage) {
-        newErrors[key] = errorMessage;
-        errorDoesNoExist = false;
+        if (errorMessage) {
+          newErrors[name] = errorMessage;
+          errorDoesNoExist = false;
+        } else {
+          delete newErrors[name];
+        }
+      };
+
+      if (Array.isArray(values[key])) {
+        values[key].forEach(value => validate(key, value));
       } else {
-        delete newErrors[key];
+        validate(key, values[key]);
       }
     });
 
@@ -52,13 +60,16 @@ const useForm = ({ callback, rules }) => {
   };
 
   const validateOnChange = (event) => {
-    const {
-      target: {
-        required, value, name,
-      },
-    } = event;
+    const { target } = event;
+    const { required, name, type } = target;
+    let { value } = target;
 
-    if (required && value.trim() === '') {
+    if (type === 'checkbox') {
+      value = target.checked;
+      if (required && !value) {
+        return errorHandler(name, value, `The ${formatter(name)} must be accepted.`);
+      }
+    } else if (required && value.trim() === '') {
       return errorHandler(name, value, `The ${formatter(name)} field cannot be empty.`);
     }
 
@@ -70,26 +81,50 @@ const useForm = ({ callback, rules }) => {
     if (validation.fails()) {
       return errorHandler(name, value, validation.errors.first(name));
     }
-
     return true;
   };
 
+  const getMultipleSelection = (event) => {
+    const { options } = event.target;
+    const selected = Object.entries(options).filter(([, option]) => option.selected);
+    const value = selected.map(([, option]) => option.value);
+    return value;
+  };
+
   const handleChange = (event) => {
+    const { target } = event;
     if (validateOnChange(event)) {
+      let { value } = target;
+
+      if (target.type === 'select-multiple') {
+        value = getMultipleSelection(event);
+      }
+      if (target.type === 'checkbox') {
+        value = target.checked;
+      }
+
       setValues({
         ...values,
-        [event.target.name]: event.target.value,
+        [target.name]: value,
       });
 
-      delete errors[event.target.name];
+      delete errors[target.name];
       setErrors({ ...errors });
+      return true;
     }
+    return false;
   };
 
   const sanitizeData = () => {
     const data = {};
     Object.keys(values).forEach((key) => {
-      data[key] = values[key].trim();
+      if (Array.isArray(values[key])) {
+        data[key] = values[key].map(value => value.trim());
+      } else if (typeof values[key] === 'boolean') {
+        data[key] = values[key];
+      } else {
+        data[key] = values[key].trim();
+      }
     });
     return data;
   };
