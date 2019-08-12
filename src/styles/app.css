@@ -15,6 +15,21 @@ h1{
   padding: 5% 0;
   margin-bottom: .5em;
 }
+
+input:not([type='checkbox']), select, button, label{
+  width: 8em;
+  height: 2em;
+}
+
+input[type='checkbox']{
+  margin-right: .5em;
+}
+
+option {
+  height: 2em;
+}
+
+
 .table {
   background: papayawhip;
   margin-top: .5em;
