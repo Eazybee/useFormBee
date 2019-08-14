@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../styles/app.css';
 import useForm from '../hooks/useForm';
 import Table from './Table';
-import SelectForm from './SelectForm';
 
 const App = () => {
   const [submittedValues, setSubmittedValues] = useState({});
@@ -14,6 +13,7 @@ const App = () => {
     userName: 'alpha',
     age: 'numeric',
     gender: 'required|boolean',
+    friend: ['required', { in: ['mosimi', 'benny'] }],
   };
 
   const {
@@ -22,19 +22,11 @@ const App = () => {
 
   const { userName, age } = values;
   const {
-    userName: usernameErr, age: ageErr, gender: genderErr,
+    userName: usernameErr,
+    age: ageErr,
+    gender: genderErr,
+    friend: friendErr,
   } = errors;
-
-  const selectOptions = [
-    {
-      value: 'simi',
-      text: 'SIMI',
-    },
-    {
-      value: 'mosimi',
-      text: 'MOSIMI',
-    },
-  ];
 
   return (
     <>
@@ -64,16 +56,19 @@ const App = () => {
           <input type='checkbox' name='gender' data-testid='confirm' required onChange={handleChange}/><br />
         </label>
         {genderErr && <p>{genderErr}</p>}
+        <br />
+        <select onChange={handleChange} name='friend' multiple data-testid='friend' >
+          <option value='mosimi' data-testid='mosimi'>Mosimiloluwa</option>
+          <option value='benny' data-testid='benny'>Benny</option>
+        </select>
+        {friendErr && <p data-testid='selectionError'>{friendErr}</p>}
+        <br />
         <button type='submit'>Submit</button>
         <button type='reset' onClick={handleReset}>Reset</button>
       </form>
       {!Object.keys(errors).length
       && Object.keys(submittedValues).length > 0
       && <Table submittedValues={submittedValues} />}
-      <SelectForm
-        rules={{ friend: ['required', { in: ['simi', 'mosimi'] }] }}
-        options={selectOptions}
-      />
     </>
   );
 };

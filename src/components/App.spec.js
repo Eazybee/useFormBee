@@ -91,6 +91,7 @@ describe('App Component', () => {
       fireEvent.change(getByPlaceholderText('Username'), { target: { value: validInputs.username } });
       fireEvent.change(getByPlaceholderText('Age'), { target: { value: validInputs.age } });
       fireEvent.click(getByTestId('confirm'));
+      fireEvent.change(getByTestId('friend'), { target: { value: 'mosimi' } });
       fireEvent.click(getAllByText('Submit')[0]);
 
       expect(getByTestId('table')).toBeTruthy();
@@ -114,6 +115,7 @@ describe('App Component', () => {
       } catch (error) {
         expect(element).toBe(undefined);
         expect(error).toBeTruthy();
+        expect(getByTestId('selectionError')).toHaveTextContent('The friend field is required.');
         expect(error.message.includes('Unable to find an element by: [data-testid="table"]')).toBeTruthy();
         expect(getByTestId('username')).toHaveTextContent('The user name field must contain only alphabetic characters.');
       }

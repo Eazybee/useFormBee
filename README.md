@@ -78,16 +78,16 @@ const Form = () => {
   };
 
   //create you callback function
-  const saveToDB = (values) => {
-    console.log(values);
+  const saveFormData = (values) => {
     // ...your logic
   };
 
   const {
     values, handleChange, handleSubmit, errors, handleReset,
-  } = useFormBee({ callback: saveToDB, rules });
+  } = useFormBee({ callback: saveFormData, rules });
 
   //destructure field values
+  
   // the values is created from Object.keys(rules)
   const { firstName, age } = values;
 
