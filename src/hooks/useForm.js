@@ -3,19 +3,19 @@ import Validator from 'validatorjs';
 import formatter from '../helpers/formatter';
 
 const useForm = ({ callback, rules }) => {
-  const prepareInitialState = () => {
+  const initialState = () => {
     const state = {};
     Object.keys(rules).forEach((key) => { state[key] = ''; });
     return state;
   };
 
-  const [values, setValues] = useState(prepareInitialState());
+  const [values, setValues] = useState(initialState());
   const [errors, setErrors] = useState({});
 
   Validator.setAttributeFormatter(attribute => formatter(attribute));
 
   const validateOnSubmit = () => {
-    let errorDoesNoExist = true;
+    let hasError = true;
     const newErrors = { ...errors };
 
     Object.keys(rules).forEach((key) => {
@@ -29,7 +29,7 @@ const useForm = ({ callback, rules }) => {
 
         if (errorMessage) {
           newErrors[name] = errorMessage;
-          errorDoesNoExist = false;
+          hasError = false;
         } else {
           delete newErrors[name];
         }
@@ -43,7 +43,7 @@ const useForm = ({ callback, rules }) => {
     });
 
     setErrors({ ...newErrors });
-    return errorDoesNoExist;
+    return hasError;
   };
 
   const errorHandler = (name, value, message) => {
@@ -117,13 +117,13 @@ const useForm = ({ callback, rules }) => {
 
   const sanitizeData = () => {
     const data = {};
-    Object.keys(values).forEach((key) => {
-      if (Array.isArray(values[key])) {
-        data[key] = values[key].map(value => value.trim());
-      } else if (typeof values[key] === 'boolean') {
-        data[key] = values[key];
+    Object.keys(values).forEach((field) => {
+      if (Array.isArray(values[field])) {
+        data[field] = values[field].map(value => value.trim());
+      } else if (typeof values[field] === 'boolean') {
+        data[field] = values[field];
       } else {
-        data[key] = values[key].trim();
+        data[field] = values[field].trim();
       }
     });
     return data;
@@ -140,7 +140,7 @@ const useForm = ({ callback, rules }) => {
   };
 
   const handleReset = () => {
-    setValues(prepareInitialState());
+    setValues(initialState());
     setErrors({});
   };
 
