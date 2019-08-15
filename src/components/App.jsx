@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/app.css';
-import useForm from '../hooks/useForm';
+import useFormBee from '../hooks/useFormBee';
 import Table from './Table';
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
 
   const {
     values, handleChange, handleSubmit, errors, handleReset,
-  } = useForm({ callback: login, rules });
+  } = useFormBee({ callback: login, rules });
 
   const { userName, age } = values;
   const {

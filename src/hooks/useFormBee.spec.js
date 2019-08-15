@@ -1,13 +1,13 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useForm from './useForm';
+import useFormBee from './useFormBee';
 import {
   callback, rules, event, getEvent, checkBoxEvent, multipleSelectEvent,
-} from '../../test/fixtures/useForm';
+} from '../../test/fixtures/useFormBee';
 
 
 describe('userForm hook', () => {
   it(' should render', () => {
-    const { result } = renderHook(() => useForm({ callback, rules }));
+    const { result } = renderHook(() => useFormBee({ callback, rules }));
     const {
       values, errors, handleChange, handleSubmit, handleReset,
     } = result.current;
@@ -23,7 +23,7 @@ describe('userForm hook', () => {
 
   describe('handleChange function', () => {
     it('should update username field value', () => {
-      const { result } = renderHook(() => useForm({ callback, rules }));
+      const { result } = renderHook(() => useFormBee({ callback, rules }));
       const { handleChange } = result.current;
       let valid;
 
@@ -42,7 +42,7 @@ describe('userForm hook', () => {
 
     it('should have error when passed empty string for a required field',
       () => {
-        const { result } = renderHook(() => useForm({ callback, rules }));
+        const { result } = renderHook(() => useFormBee({ callback, rules }));
         const { handleChange } = result.current;
         let valid;
 
@@ -58,7 +58,7 @@ describe('userForm hook', () => {
       });
 
     it('should have error when passed data with invalid data type', () => {
-      const { result } = renderHook(() => useForm({ callback, rules }));
+      const { result } = renderHook(() => useFormBee({ callback, rules }));
       const { handleChange } = result.current;
       let valid;
 
@@ -75,7 +75,7 @@ describe('userForm hook', () => {
     });
 
     it('should update checkbox', () => {
-      const { result } = renderHook(() => useForm({ callback, rules: { agreement: 'required|boolean' } }));
+      const { result } = renderHook(() => useFormBee({ callback, rules: { agreement: 'required|boolean' } }));
       const { handleChange } = result.current;
       let valid;
 
@@ -91,7 +91,7 @@ describe('userForm hook', () => {
     });
 
     it('should update checkbox and display required messaged for a required field', () => {
-      const { result } = renderHook(() => useForm({ callback, rules: { agreement: 'required|boolean' } }));
+      const { result } = renderHook(() => useFormBee({ callback, rules: { agreement: 'required|boolean' } }));
       const { handleChange } = result.current;
       let valid;
 
@@ -107,7 +107,7 @@ describe('userForm hook', () => {
     });
 
     it('should update multiple select', () => {
-      const { result } = renderHook(() => useForm({
+      const { result } = renderHook(() => useFormBee({
         callback, rules: { friends: ['alpha', { in: ['simi', 'mosimi', 'eazybee'] }] },
       }));
       const { handleChange } = result.current;
@@ -129,7 +129,7 @@ describe('userForm hook', () => {
 
   describe('handleSubmit function', () => {
     it('should submit and call calback function', () => {
-      const { result } = renderHook(() => useForm(
+      const { result } = renderHook(() => useFormBee(
         { callback, rules: { username: 'alpha' } },
       ));
 
@@ -146,7 +146,7 @@ describe('userForm hook', () => {
     });
 
     it('should not submit nor call calback function', () => {
-      const { result } = renderHook(() => useForm({ callback, rules }));
+      const { result } = renderHook(() => useFormBee({ callback, rules }));
       const { handleSubmit } = result.current;
 
       let callbackResponse;
@@ -164,7 +164,7 @@ describe('userForm hook', () => {
 
   describe('handleReset function', () => {
     it('should clear all inputs field when called', () => {
-      const { result } = renderHook(() => useForm({ callback, rules }));
+      const { result } = renderHook(() => useFormBee({ callback, rules }));
 
       const { handleReset } = result.current;
 
