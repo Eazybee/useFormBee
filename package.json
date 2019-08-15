@@ -1,14 +1,16 @@
 {
-  "name": "useFormBee",
-  "version": "1.0.0",
+  "name": "useformbee",
+  "version": "1.0.3",
   "description": "useFormBee is a custom react hook that helps handle form input, validations and other similar functionalities",
-  "main": "src/index.js",
+  "main": "dist/hooks/useFormBee.js",
   "scripts": {
     "lint": "eslint '**/*js'",
     "lint:fix": "prettier-eslint '**/*js' --write",
     "test": "jest",
     "clean": "rm -rf build",
     "start": "npm run clean && webpack-dev-server --env.mode development --open --hot",
+    "build": "babel src --out-dir dist",
+    "prepublishOnly": "npm run build",
     "build-dev": "npm run clean && webpack --env.mode development",
     "build-prod": "npm run clean && webpack --env.mode production"
   },
@@ -29,13 +31,14 @@
     "webpack-merge": "^4.2.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.0",
     "@babel/node": "^7.5.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.7",
+    "@testing-library/react": "^8.0.9",
     "@testing-library/react-hooks": "^1.1.0",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
@@ -68,17 +71,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eazybee/Webpack.git"
+    "url": "git+https://github.com/Eazybee/useFormBee.git"
   },
   "keywords": [
-    "webpack",
     "react",
-    "configuration"
+    "useform",
+    "react form"
   ],
   "author": "Ilori Ezekiel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Eazybee/Webpack/issues"
+    "url": "https://github.com/Eazybee/useFormBee/issues"
   },
-  "homepage": "https://github.com/Eazybee/Webpack#readme"
+  "homepage": "https://github.com/Eazybee/useFormBee#readme"
 }

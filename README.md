@@ -16,14 +16,14 @@
 
 <hr />
 
-[![Build Status](https://travis-ci.com/Eazybee/useFormBee.svg?branch=develop)](https://travis-ci.com/Eazybee/useFormBee) <a href="https://codeclimate.com/github/Eazybee/useFormBee/test_coverage"><img src="https://api.codeclimate.com/v1/badges/d103b30217999d81e940/test_coverage" /></a> <a href="https://codeclimate.com/github/Eazybee/useFormBee/maintainability"><img src="https://api.codeclimate.com/v1/badges/d103b30217999d81e940/maintainability" /></a> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![NPM Version](https://img.shields.io/badge/npm-v1.0.0-blue)](http://makeapullrequest.com) 
+[![Build Status](https://travis-ci.com/Eazybee/useFormBee.svg?branch=develop)](https://travis-ci.com/Eazybee/useFormBee) <a href="https://codeclimate.com/github/Eazybee/useFormBee/test_coverage"><img src="https://api.codeclimate.com/v1/badges/d103b30217999d81e940/test_coverage" /></a> <a href="https://codeclimate.com/github/Eazybee/useFormBee/maintainability"><img src="https://api.codeclimate.com/v1/badges/d103b30217999d81e940/maintainability" /></a> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![NPM Version](https://img.shields.io/badge/npm-v1.0.3-blue)](https://www.npmjs.com/package/useformbee) 
 
 
 ## The problem
 Handling forms in react can be a little bit tedious especially for new beginners like me 😃.  **I often find myself re-writing the same stateful logic and form validations**, especially when I have different forms in different components (such as _signup, login, profile update form_).
 
 ## Inspiration
-My mentor <a href='https://github.com/benfluleck'>@benfluleck</a> suggested I abstract my form logic so that it can easily be reusable. I created a useForm hook and showed it to him and my other colleague. To my surprise, they loved it and adviced that I made some improvements on it and also upload it to [npm](https://npmjs.com) as a library. 
+My mentor <a href='https://github.com/benfluleck'>@benfluleck</a> suggested I abstract my form logic so that it can easily be reusable. I created a useForm hook and showed it to him and my other colleague. To my surprise, they loved it and adviced that I made some improvements on it and also upload it to [npm](https://npmjs.com/package/useformbee) as a library. 
 
 ## The solution
 **useFormBee** is a custom react hook that helps me manage and abstract form logic.<br>
@@ -77,7 +77,7 @@ const Form = () => {
     age: 'numeric',
   };
 
-  //create you callback function
+  // create you callback function
   const saveFormData = (values) => {
     // ...your logic
   };
@@ -86,8 +86,8 @@ const Form = () => {
     values, handleChange, handleSubmit, errors, handleReset,
   } = useFormBee({ callback: saveFormData, rules });
 
-  //destructure field values
-  
+  // destructure field values
+
   // the values is created from Object.keys(rules)
   const { firstName, age } = values;
 
@@ -100,6 +100,7 @@ const Form = () => {
         name='firstName'
         required
       />
+
       {/* display username error  if there is an error */}
       {errors.firstName && <p>{errors.firstName }</p>}
       <br />
@@ -110,9 +111,11 @@ const Form = () => {
         onChange={handleChange}
         name='age'
       />
+
       {/* display age error  if there is an error */}
       {errors.age && <p>{errors.age}</p>}
       <br />
+
       <button type='submit'>Submit</button>
       <button type='reset'>Reset</button>
     </form>
@@ -126,10 +129,10 @@ Thanks goes to these people <a href='https://allcontributors.org/docs/en/emoji-k
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/benfluleck"><img src="https://avatars3.githubusercontent.com/u/36575414?s=460&v=4" width="100px;" alt="Ezekiel Ilori"/><br /><sub><b>Ezekiel Ilori</b></sub></a><br /><a href="#" title="Idea">🤔</a> <a href="#" title="Code">💻</a> <a href="#" title="Tests">⚠️</a> <a href="#" title="Doc">📖</a></td>
+    <td align="center"><a href="https://github.com/Eazybee"><img src="https://avatars3.githubusercontent.com/u/36575414?s=460&v=4" width="100px;" alt="Ezekiel Ilori"/><br /><sub><b>Ezekiel Ilori</b></sub></a><br /><a href="#" title="Idea">🤔</a> <a href="#" title="Code">💻</a> <a href="#" title="Tests">⚠️</a> <a href="#" title="Doc">📖</a></td>
     <td align="center"><a href="https://github.com/benfluleck"><img src="https://avatars0.githubusercontent.com/u/26222856?s=400&v=4" width="100px;" alt="Benny Ogidan"/><br /><sub><b>Benny Ogidan</b></sub></a><br /><a href="#" title="Review">👀</a> <a href="#" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
 ## LICENSE
-- MIT
+- [MIT](https://github.com/Eazybee/useFormBee/blob/develop/LICENSE)
